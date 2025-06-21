@@ -1,14 +1,8 @@
 package com.DiegoOliveira2005.study.config;
 
-import com.DiegoOliveira2005.study.entities.Category;
-import com.DiegoOliveira2005.study.entities.Order;
-import com.DiegoOliveira2005.study.entities.Product;
-import com.DiegoOliveira2005.study.entities.User;
+import com.DiegoOliveira2005.study.entities.*;
 import com.DiegoOliveira2005.study.entities.enums.OrderStatus;
-import com.DiegoOliveira2005.study.repositories.CategoryRepository;
-import com.DiegoOliveira2005.study.repositories.OrderRepository;
-import com.DiegoOliveira2005.study.repositories.ProductRepository;
-import com.DiegoOliveira2005.study.repositories.UserRepository;
+import com.DiegoOliveira2005.study.repositories.*;
 import com.DiegoOliveira2005.study.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -33,6 +27,10 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -64,5 +62,12 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(order1, order2, order3));
+
+        OrderItem orderItem1 = new OrderItem(order1, product1, 1, product1.getPrice());
+        OrderItem orderItem2 = new OrderItem(order2, product2, 3, product2.getPrice());
+        OrderItem orderItem3 = new OrderItem(order1, product3, 2, product3.getPrice());
+        OrderItem orderItem4 = new OrderItem(order3, product4, 5, product4.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(orderItem1, orderItem2, orderItem3, orderItem4));
     }
 }
