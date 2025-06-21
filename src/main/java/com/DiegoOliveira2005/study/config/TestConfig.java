@@ -2,11 +2,14 @@ package com.DiegoOliveira2005.study.config;
 
 import com.DiegoOliveira2005.study.entities.Category;
 import com.DiegoOliveira2005.study.entities.Order;
+import com.DiegoOliveira2005.study.entities.Product;
 import com.DiegoOliveira2005.study.entities.User;
 import com.DiegoOliveira2005.study.entities.enums.OrderStatus;
 import com.DiegoOliveira2005.study.repositories.CategoryRepository;
 import com.DiegoOliveira2005.study.repositories.OrderRepository;
+import com.DiegoOliveira2005.study.repositories.ProductRepository;
 import com.DiegoOliveira2005.study.repositories.UserRepository;
+import com.DiegoOliveira2005.study.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -27,12 +30,30 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
     @Override
     public void run(String... args) throws Exception {
 
         Category category1 = new Category("Electronics");
         Category category2 = new Category("Books");
         Category category3 = new Category("Computers");
+
+        categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
+
+        Product product1 = new Product("TV", "Make image???",  2000.00, "");
+        Product product2 = new Product("Java Deitel", "it's a book",  95.00, "");
+        Product product3 = new Product("Compiutär", "Computes",  4000.00, "");
+        Product product4 = new Product("Lenovo or Dell", "i need one!",  1000.00, "");
+
+        product1.getCategories().add(category1);
+        product2.getCategories().add(category2);
+        product3.getCategories().add(category3);
+        product4.getCategories().add(category3);
+        product4.getCategories().add(category1);
+
+        productRepository.saveAll(Arrays.asList(product1, product2, product3, product4));
 
         User user1 = new User("Manus Thrax", "manus@email.com", "987654321", "123456" );
         User user2 = new User("Diego Carvalho", "diego@gmail.com", "987654323", "123456" );
@@ -43,6 +64,5 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(user1, user2));
         orderRepository.saveAll(Arrays.asList(order1, order2, order3));
-        categoryRepository.saveAll(Arrays.asList(category1, category2, category3));
     }
 }
