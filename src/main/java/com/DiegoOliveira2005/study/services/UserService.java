@@ -2,6 +2,7 @@ package com.DiegoOliveira2005.study.services;
 
 import com.DiegoOliveira2005.study.entities.User;
 import com.DiegoOliveira2005.study.repositories.UserRepository;
+import com.DiegoOliveira2005.study.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,6 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
     }
 }
